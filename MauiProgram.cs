@@ -16,7 +16,6 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			})
-			.AddMessenger()
 			.AddViewModels()
 			.AddViews()
 			.AddServices();
@@ -26,12 +25,6 @@ public static class MauiProgram
 #endif
 
 		return builder.Build();
-	}
-
-	private static MauiAppBuilder AddMessenger(this MauiAppBuilder appBuilder)
-	{
-		appBuilder.Services.AddTransient<IMessenger, WeakReferenceMessenger>();
-		return appBuilder;
 	}
 
 	private static MauiAppBuilder AddViewModels(this MauiAppBuilder appBuilder)

@@ -1,4 +1,13 @@
+using CommunityToolkit.Mvvm.Messaging.Messages;
+
 namespace maui_backgrounding.Messaging;
 
-public record MessageData(string Message, bool Start);
+public class MessageData : ValueChangedMessage<string>
+{
+    public bool Start { get; }
+    public MessageData(string message, bool start) : base(message)
+    {
+        this.Start = start;
+    }
+}
 

@@ -7,10 +7,8 @@ namespace maui_backgrounding.ViewModels;
 
 public class MainViewModel : INotifyPropertyChanged
 {
-    private readonly IMessenger Messenger;
-    public MainViewModel(IMessenger messenger)
+    public MainViewModel()
     {
-        Messenger = messenger;
     }
 
     private string _statusText = "Initialized";
@@ -29,7 +27,7 @@ public class MainViewModel : INotifyPropertyChanged
 
     public void StartFetching()
     {
-        this.Messenger.Send(new Messaging.MessageData("Starting", true));
+        WeakReferenceMessenger.Default.Send(new Messaging.MessageData("Starting", true));
         this.StatusText = "Fetching";
     }
 

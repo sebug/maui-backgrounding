@@ -3,6 +3,7 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using AndroidX.Core.App;
+using HtmlAgilityPack;
 
 namespace maui_backgrounding.Services;
 
@@ -22,7 +23,12 @@ public class FetchLyricsService : Service
             var input = intent.GetStringExtra("inputExtra");
     
             var notificationIntent = new Intent(this, typeof(MainActivity));
-            var pendingIntent = PendingIntent.GetActivity(this, 0, notificationIntent, 0);
+            PendingIntentFlags intentFlags = 0;
+            if (OperatingSystem.IsAndroidVersionAtLeast(23))
+            {
+                intentFlags = PendingIntentFlags.Immutable;
+            }
+            var pendingIntent = PendingIntent.GetActivity(this, 0, notificationIntent, intentFlags);
             
             var notification = new NotificationCompat.Builder(this, MainApplication.ChannelId)
                 .SetContentTitle("Example Service")
@@ -32,9 +38,24 @@ public class FetchLyricsService : Service
                 .Build();
             
             StartForeground(1, notification);
+
+            PerformFetch();
         }
  
         return StartCommandResult.NotSticky;
+    }
+
+    private async void PerformFetch() 
+    {
+        var content = await FetchLyrics();
+        var doc = new HtmlDocument();
+        doc.LoadHtml(content);
+        var lyricsLines = doc.DocumentNode.Descendants("div")
+        .Where(div => div.GetAttributeValue("data-testid", String.Empty) == "lyrics.lyricLine")
+        .Select(line => line.InnerText)
+        .ToList();
+
+        StopSelf();
     }
 
     private string _lyricsUrl = "https://lyrics.lyricfind.com/lyrics/death-cab-for-cutie-no-room-in-frame";

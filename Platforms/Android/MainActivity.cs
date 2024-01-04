@@ -14,13 +14,12 @@ public class MainActivity : MauiAppCompatActivity
 
    public MainActivity()
    {
-        var messenger = MauiApplication.Current.Services.GetService<IMessenger>();
- 
-        messenger.Register<MessageData>(this, (recipient, message) =>
+
+        WeakReferenceMessenger.Default.Register<MessageData>(this, (recipient, message) =>
         {
             if (message.Start)
             {
-                StartService(message.Message);
+                StartService(message.Value);
             }
             else
             {

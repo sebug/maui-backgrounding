@@ -13,7 +13,8 @@ public partial class MainPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-		(this.BindingContext as MainViewModel)?.StartFetching();
+		var vm = (MainViewModel)this.BindingContext;
+		vm.StartFetching();
     }
 }
 
