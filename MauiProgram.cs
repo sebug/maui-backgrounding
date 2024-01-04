@@ -1,4 +1,5 @@
-﻿using maui_backgrounding.Services;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using maui_backgrounding.Services;
 using maui_backgrounding.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -16,6 +17,7 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			})
+			.AddMessenger()
 			.AddViewModels()
 			.AddViews()
 			.AddServices();
@@ -25,6 +27,12 @@ public static class MauiProgram
 #endif
 
 		return builder.Build();
+	}
+
+	private static MauiAppBuilder AddMessenger(this MauiAppBuilder appBuilder)
+	{
+		appBuilder.Services.AddTransient<IMessenger, WeakReferenceMessenger>();
+		return appBuilder;
 	}
 
 	private static MauiAppBuilder AddViewModels(this MauiAppBuilder appBuilder)
@@ -41,7 +49,7 @@ public static class MauiProgram
 
 	private static MauiAppBuilder AddServices(this MauiAppBuilder appBuilder)
 	{
-		appBuilder.Services.AddSingleton<IFetchLyricsService, FetchLyricsService>();
+		
 		return appBuilder;
 	}
 }

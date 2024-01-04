@@ -1,15 +1,16 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using maui_backgrounding.Services;
+using CommunityToolkit.Mvvm.Messaging;
+using maui_backgrounding.Messaging;
 
 namespace maui_backgrounding.ViewModels;
 
 public class MainViewModel : INotifyPropertyChanged
 {
-    private readonly IFetchLyricsService FetchLyricsService;
-    public MainViewModel(IFetchLyricsService fetchLyricsService)
+    private readonly IMessenger Messenger;
+    public MainViewModel(IMessenger messenger)
     {
-        FetchLyricsService = fetchLyricsService;
+        Messenger = messenger;
     }
 
     private string _statusText = "Initialized";
@@ -28,7 +29,7 @@ public class MainViewModel : INotifyPropertyChanged
 
     public void StartFetching()
     {
-        this.FetchLyricsService.StartFetchLyrics();
+        this.Messenger.Send(new Messaging.MessageData("Starting", true));
         this.StatusText = "Fetching";
     }
 

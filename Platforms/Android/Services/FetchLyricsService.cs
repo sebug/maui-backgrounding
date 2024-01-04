@@ -6,7 +6,7 @@ using Android.Runtime;
 namespace maui_backgrounding.Services;
 
 [Service]
-public partial class FetchLyricsService : Service
+public class FetchLyricsService : Service
 {
     public override IBinder? OnBind(Intent? intent)
     {
@@ -28,17 +28,13 @@ public partial class FetchLyricsService : Service
         return StartCommandResult.NotSticky;
     }
 
-    public void StartFetchLyrics()
+    private string _lyricsUrl = "https://lyrics.lyricfind.com/lyrics/death-cab-for-cutie-no-room-in-frame";
+    protected async Task<string> FetchLyrics()
     {
-        Intent startService = new Intent(MainActivity.ActivityCurrent, typeof(FetchLyricsService));
-        startService.SetAction("START_SERVICE");
-        MainActivity.ActivityCurrent.StartService(startService);
-    }
-
-    public void StopFetchLyrics()
-    {
-        Intent stopIntent = new Intent(MainActivity.ActivityCurrent, this.Class);
-        stopIntent.SetAction("STOP_SERVICE");
-        MainActivity.ActivityCurrent.StartService(stopIntent);
+        using (var client = new HttpClient())
+        {
+            string content = await client.GetStringAsync(_lyricsUrl);
+            return content;
+        }
     }
 }
