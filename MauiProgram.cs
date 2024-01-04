@@ -1,4 +1,5 @@
-﻿using maui_backgrounding.ViewModels;
+﻿using maui_backgrounding.Services;
+using maui_backgrounding.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace maui_backgrounding;
@@ -34,6 +35,12 @@ public static class MauiProgram
 	private static MauiAppBuilder AddViews(this MauiAppBuilder appBuilder)
 	{
 		appBuilder.Services.AddSingleton<MainPage>();
+		return appBuilder;
+	}
+
+	private static MauiAppBuilder AddServices(this MauiAppBuilder appBuilder)
+	{
+		appBuilder.Services.AddSingleton<IFetchLyricsService, FetchLyricsService>();
 		return appBuilder;
 	}
 }
