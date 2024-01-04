@@ -4,7 +4,6 @@ using Android.Content.PM;
 using Android.OS;
 using CommunityToolkit.Mvvm.Messaging;
 using maui_backgrounding.Messaging;
-using maui_backgrounding.Services;
 
 namespace maui_backgrounding;
 

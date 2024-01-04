@@ -5,7 +5,7 @@ using Android.Runtime;
 using AndroidX.Core.App;
 using HtmlAgilityPack;
 
-namespace maui_backgrounding.Services;
+namespace maui_backgrounding;
 
 [Service]
 public class FetchLyricsService : Service
@@ -37,7 +37,14 @@ public class FetchLyricsService : Service
                 .SetContentIntent(pendingIntent)
                 .Build();
             
-            StartForeground(1, notification);
+            if (OperatingSystem.IsAndroidVersionAtLeast(29))
+            {
+                StartForeground(1, notification, Android.Content.PM.ForegroundService.TypeDataSync);
+            }
+            else
+            {
+                StartForeground(1, notification);
+            }
 
             PerformFetch();
         }
@@ -50,10 +57,14 @@ public class FetchLyricsService : Service
         var content = await FetchLyrics();
         var doc = new HtmlDocument();
         doc.LoadHtml(content);
-        var lyricsLines = doc.DocumentNode.Descendants("div")
-        .Where(div => div.GetAttributeValue("data-testid", String.Empty) == "lyrics.lyricLine")
-        .Select(line => line.InnerText)
-        .ToList();
+        var nextData = doc.DocumentNode.Descendants("script")
+        .FirstOrDefault(script => script.GetAttributeValue("id", String.Empty) == "__NEXT_DATA__");
+
+        if (nextData != null)
+        {
+            string rawContent = nextData.InnerText;
+        }
+
 
         StopSelf();
     }
