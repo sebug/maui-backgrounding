@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "maui-backgrounding", "maui-backgrounding.csproj", "{0B3AC8B8-86EE-4704-B7E6-9C35D9E78C37}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B3AC8B8-86EE-4704-B7E6-9C35D9E78C37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3AC8B8-86EE-4704-B7E6-9C35D9E78C37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3AC8B8-86EE-4704-B7E6-9C35D9E78C37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3AC8B8-86EE-4704-B7E6-9C35D9E78C37}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2BDB61D7-F0E3-4D7D-A27D-3D4AA1BA483A}
+	EndGlobalSection
+EndGlobal
