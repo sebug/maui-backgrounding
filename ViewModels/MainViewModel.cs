@@ -9,6 +9,10 @@ public class MainViewModel : INotifyPropertyChanged
 {
     public MainViewModel()
     {
+        WeakReferenceMessenger.Default.Register<LyricsLineMessageData>(this, (recipient, message) =>
+        {
+            this.LyricsLine = message.Value;
+        });
     }
 
     private string _statusText = "Initialized";
@@ -20,6 +24,20 @@ public class MainViewModel : INotifyPropertyChanged
             if (value != _statusText)
             {
                 _statusText = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    private string _lyricsLine = String.Empty;
+    public string LyricsLine
+    {
+        get => _lyricsLine;
+        set
+        {
+            if (value != _lyricsLine)
+            {
+                _lyricsLine = value;
                 OnPropertyChanged();
             }
         }

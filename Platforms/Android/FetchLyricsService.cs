@@ -4,7 +4,9 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using AndroidX.Core.App;
+using CommunityToolkit.Mvvm.Messaging;
 using HtmlAgilityPack;
+using maui_backgrounding.Messaging;
 using maui_backgrounding.Models;
 
 namespace maui_backgrounding;
@@ -72,7 +74,8 @@ public class FetchLyricsService : Service
                 var splitLines = allLyricsLines.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var line in splitLines)
                 {
-                    
+                    WeakReferenceMessenger.Default.Send(new LyricsLineMessageData(line));
+                    await Task.Delay(TimeSpan.FromSeconds(3));
                 }
             }
         }

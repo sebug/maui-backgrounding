@@ -1,3 +1,11 @@
+using CommunityToolkit.Mvvm.Messaging.Messages;
+
 namespace maui_backgrounding.Messaging;
 
-public record LyricsLineMessageData(string Line);
+public class LyricsLineMessageData : ValueChangedMessage<string>
+{
+    public LyricsLineMessageData(string line) : base(line)
+    {
+        
+    }
+}

@@ -12,6 +12,11 @@
                 Text="{Binding StatusText}"
                 Style="{StaticResource Headline}"
                 SemanticProperties.HeadingLevel="Level1" />
+
+            <Label
+                Text="{Binding LyricsLine}"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level2" />
         </VerticalStackLayout>
     </ScrollView>
 
