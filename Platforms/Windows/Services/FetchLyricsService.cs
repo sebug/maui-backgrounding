@@ -6,4 +6,9 @@ public partial class FetchLyricsService
     {
         
     }
+
+    public void StopFetchLyrics()
+    {
+        
+    }
 }
