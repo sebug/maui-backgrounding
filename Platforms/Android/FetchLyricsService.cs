@@ -1,9 +1,11 @@
+using System.Text.Json;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using AndroidX.Core.App;
 using HtmlAgilityPack;
+using maui_backgrounding.Models;
 
 namespace maui_backgrounding;
 
@@ -63,6 +65,7 @@ public class FetchLyricsService : Service
         if (nextData != null)
         {
             string rawContent = nextData.InnerText;
+            var pageContent = JsonSerializer.Deserialize<PageContent>(rawContent);
         }
 
 
