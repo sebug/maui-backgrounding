@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.Messaging;
-using maui_backgrounding.Services;
 using maui_backgrounding.ViewModels;
 using Microsoft.Extensions.Logging;
 

@@ -10,20 +10,23 @@ public class FetchLyricsService : Service
 {
     public override IBinder? OnBind(Intent? intent)
     {
-        throw new NotImplementedException();
+        return null;
     }
 
     [return: GeneratedEnum]
     public override StartCommandResult OnStartCommand(Intent? intent, [GeneratedEnum] StartCommandFlags flags, int startId)
     {
-        if (intent.Action == "START_SERVICE")
+        if (intent != null && OperatingSystem.IsAndroidVersionAtLeast(24))
         {
-            FetchLyrics();
-        }
-        else if (intent.Action == "STOP_SERVICE")
-        {
-            StopForeground(true);//Stop the service
-            StopSelfResult(startId);
+            if (intent.Action == "START_SERVICE")
+            {
+                FetchLyrics();
+            }
+            else if (intent.Action == "STOP_SERVICE")
+            {
+                StopForeground(StopForegroundFlags.Remove);
+                StopSelfResult(startId);
+            }
         }
         return StartCommandResult.NotSticky;
     }
