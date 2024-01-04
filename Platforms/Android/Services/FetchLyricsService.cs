@@ -2,6 +2,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using AndroidX.Core.App;
 
 namespace maui_backgrounding.Services;
 
@@ -16,18 +17,23 @@ public class FetchLyricsService : Service
     [return: GeneratedEnum]
     public override StartCommandResult OnStartCommand(Intent? intent, [GeneratedEnum] StartCommandFlags flags, int startId)
     {
-        if (intent != null && OperatingSystem.IsAndroidVersionAtLeast(24))
+        if (intent != null)
         {
-            if (intent.Action == "START_SERVICE")
-            {
-                FetchLyrics();
-            }
-            else if (intent.Action == "STOP_SERVICE")
-            {
-                StopForeground(StopForegroundFlags.Remove);
-                StopSelfResult(startId);
-            }
+            var input = intent.GetStringExtra("inputExtra");
+    
+            var notificationIntent = new Intent(this, typeof(MainActivity));
+            var pendingIntent = PendingIntent.GetActivity(this, 0, notificationIntent, 0);
+            
+            var notification = new NotificationCompat.Builder(this, MainApplication.ChannelId)
+                .SetContentTitle("Example Service")
+                .SetContentText(input)
+                .SetSmallIcon(Resource.Drawable.notification_icon)
+                .SetContentIntent(pendingIntent)
+                .Build();
+            
+            StartForeground(1, notification);
         }
+ 
         return StartCommandResult.NotSticky;
     }
 
