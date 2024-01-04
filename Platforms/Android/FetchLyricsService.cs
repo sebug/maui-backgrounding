@@ -66,6 +66,15 @@ public class FetchLyricsService : Service
         {
             string rawContent = nextData.InnerText;
             var pageContent = JsonSerializer.Deserialize<PageContent>(rawContent);
+            string? allLyricsLines = pageContent?.props?.pageProps?.songData?.track?.lyrics;
+            if (allLyricsLines != null)
+            {
+                var splitLines = allLyricsLines.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var line in splitLines)
+                {
+                    
+                }
+            }
         }
 
 
